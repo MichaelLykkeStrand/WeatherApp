@@ -17,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B0AD028255190EF00605536 /* yugothib.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = yugothib.ttf; path = "../../../../Downloads/yu-gothic/yugothib.ttf"; sourceTree = "<group>"; };
 		5B0BF7062542F062002CCBE6 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B0BF7092542F062002CCBE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B0BF70B2542F062002CCBE6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,9 +40,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B0AD0272551904700605536 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5B0AD028255190EF00605536 /* yugothib.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		5B0BF6FD2542F062002CCBE6 = {
 			isa = PBXGroup;
 			children = (
+				5B0AD0272551904700605536 /* fonts */,
 				5B0BF7082542F062002CCBE6 /* WeatherApp */,
 				5B0BF7072542F062002CCBE6 /* Products */,
 			);
