@@ -12,8 +12,10 @@ class ViewController: UIViewController {
 
     var weatherResult: Forecast?
     
+    @IBOutlet weak var DailySymbolLabel: UILabel!
     @IBOutlet weak var DailyTempLabel: UILabel!
     @IBOutlet weak var DailySunsetLabel: UILabel!
+    @IBOutlet weak var DailyCityLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         getWeather()
@@ -33,8 +35,15 @@ class ViewController: UIViewController {
             return
         }
         
-        self.DailyTempLabel.text = "\(weatherResult.daily[1].temp.day.rounded())°C"
+        self.DailyTempLabel.text = "\(weatherResult.current.temp)°C"
         self.DailySunsetLabel.text = "\(weatherResult.daily[1].humidity)%"
+        
+        print(weatherResult.current.clouds)
+        if(weatherResult.current.clouds > 50){
+            self.DailySymbolLabel.text = "☁"
+        } else {
+            self.DailySymbolLabel.text = "☀"
+        }
     }
 
 
