@@ -18,11 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-<<<<<<< HEAD
 		5B0AD028255190EF00605536 /* yugothib.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = yugothib.ttf; path = "../../../../Downloads/yu-gothic/yugothib.ttf"; sourceTree = "<group>"; };
-=======
 		13418F8B255174E700AB2A9E /* LoadSaveForcastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadSaveForcastService.swift; sourceTree = "<group>"; };
->>>>>>> DataStorage
 		5B0BF7062542F062002CCBE6 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B0BF7092542F062002CCBE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B0BF70B2542F062002CCBE6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
