@@ -60,6 +60,39 @@ class ForecastService {
         task.resume()
     }
     
+    func setLatLonFromCity(city: String) {
+        guard let url = URL(string: "api.openweathermap.org/data/2.5/weather?q=London&appid=dfac6d41feb1c2880980e5dd7ac7e159") else {
+            debugPrint("Failed to build LatLonUrl")
+            return
+        }
+        
+        let task = session.dataTask(with: url) { (data, response, error) in
+        
+            DispatchQueue.main.async {
+                
+                guard let data = data, let response = response as? HTTPURLResponse else {
+                    debugPrint("Invalid data or response")
+                    return
+                }
+                
+                do {
+                    if response.statusCode == 200 {
+                        let items = try JSONDecoder().decode(ForecastByCity.self, from: data)
+                        let newLat = items.coord.lat
+                        let newLon = items.coord.lon
+                        self.setLatitude(newLat)
+                        self.setLongitude(newLon)
+                    } else {
+                        debugPrint("Response wasn't 200. It was: " + "\n\(response.statusCode)")
+                    }
+                } catch {
+                    debugPrint(error.localizedDescription)
+                }
+            }
+        }
+        task.resume()
+    }
+    
     func setLatitude(_ latitude: String) {
         URL_LATITUDE = latitude
     }

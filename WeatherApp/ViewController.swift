@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     }
     
     func getWeather() {
+        ForecastService.shared.setLatLonFromCity(city: "Odense")
         ForecastService.shared.getWeather(onSuccess: { (result) in
             self.weatherResult = result
             self.updateWeatherView()

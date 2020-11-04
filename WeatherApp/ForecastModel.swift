@@ -85,4 +85,13 @@ struct FeelsLike: Codable {
     let morn: Double
 }
 
+struct ForecastByCity: Codable {
+    let coord: Coordinates
+}
+
+struct Coordinates: Codable {
+    let lat: Double
+    let lon: Double
+}
+
 
