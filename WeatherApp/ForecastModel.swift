@@ -1,4 +1,4 @@
-//
+ //
 //  ForecastModel.swift
 //  WeatherApp
 //
