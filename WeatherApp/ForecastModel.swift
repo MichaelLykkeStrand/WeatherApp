@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Forecast: Codable {
+struct Forecast: Codable, Equatable {
     let lat: Double
     let lon: Double
     let timezone: String
@@ -17,14 +17,14 @@ struct Forecast: Codable {
     var daily: [DailyForecast]
 }
 
-struct Weather: Codable{
+struct Weather: Codable, Equatable {
     let id: Int
     let main: String
     let description: String
     let icon: String
 }
 
-struct CurrentForecast: Codable {
+struct CurrentForecast: Codable, Equatable {
     let dt: Int
     let sunrise: Int
     let sunset: Int
@@ -40,7 +40,7 @@ struct CurrentForecast: Codable {
     let weather: [Weather]
 }
 
-struct HourlyForecast: Codable {
+struct HourlyForecast: Codable, Equatable {
     let dt: Int
     let temp: Double
     let feels_like: Double
@@ -53,7 +53,7 @@ struct HourlyForecast: Codable {
     let weather: [Weather]
 }
 
-struct DailyForecast: Codable {
+struct DailyForecast: Codable, Equatable {
     let dt: Int
     let sunrise: Int
     let sunset: Int
@@ -69,7 +69,7 @@ struct DailyForecast: Codable {
     let weather: [Weather]
 }
 
-struct Temperature: Codable {
+struct Temperature: Codable, Equatable {
     let day: Double
     let min: Double
     let max: Double
@@ -78,7 +78,7 @@ struct Temperature: Codable {
     let morn: Double
 }
 
-struct FeelsLike: Codable {
+struct FeelsLike: Codable, Equatable {
     let day: Double
     let night: Double
     let eve: Double

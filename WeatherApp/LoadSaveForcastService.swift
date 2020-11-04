@@ -9,16 +9,10 @@
 import Foundation
 
 func forecastArrayToJSON(Forecasts forecasts: Array<Forecast>) -> URL?{
-    var output : [Forecast] = []
-    
-    for i in 0..<forecasts.count{
-        output.append(forecasts[i])
-    }
-    
     do {
-        let jsonData = try JSONEncoder().encode(output)
+        let jsonData = try JSONEncoder().encode(forecasts)
+        //print(forecasts)
         let jsonString = String(data: jsonData, encoding: .utf8)!
-        print(jsonString)
 
         //let decodedForecasts = try JSONDecoder().decode([Forecast].self, from: jsonData)
         //print(decodedForecasts)
@@ -33,8 +27,8 @@ func forecastArrayToJSON(Forecasts forecasts: Array<Forecast>) -> URL?{
             do {
                 try jsonString.write(to: pathWithFileName, atomically: true, encoding: .utf8)
                 return pathWithFileName
-            } catch {print(error)}
-        } catch {print(error)}
+            } catch { print(error) }
+        } catch { print(error) }
     } catch { print(error) }
     return nil
 }
@@ -43,7 +37,7 @@ func JSONToForecastArray(URL url: URL) -> [Forecast]?{
     do {
         let jsonData = try Data(contentsOf:url, options: [.alwaysMapped , .uncached ] )
         let decodedForecasts = try JSONDecoder().decode([Forecast].self, from: jsonData)
-        print(decodedForecasts)
+        //print(decodedForecasts)
         return (decodedForecasts)
     } catch { print(error) }
     return nil

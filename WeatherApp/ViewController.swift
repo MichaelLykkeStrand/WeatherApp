@@ -26,17 +26,15 @@ class ViewController: UIViewController {
         let dailyForecast = DailyForecast(dt: 1, sunrise: 1, sunset: 1, temp: temperature, feels_like: feelsLike, pressure: 1, humidity: 1, dew_point: 1, uvi: 1, clouds: 1, wind_speed: 1, wind_deg: 1, weather:[weather01])
         let forecast01 = Forecast(lat: 1, lon: 1, timezone: "timezone01", current: currentForecast, hourly: [hourlyForecast], daily: [dailyForecast])
         let forecast02 = Forecast(lat: 2, lon: 2, timezone: "timezone02", current: currentForecast, hourly: [hourlyForecast], daily: [dailyForecast])
-        var forecasts : [Forecast]? = [forecast01, forecast02]
+        let forecasts : [Forecast]? = [forecast01, forecast02]
 
         if let url = forecastArrayToJSON(Forecasts: forecasts!){
-            print(forecasts)
             print(" ")
             print(" ")
             print(" ")
             print(" ")
-            forecasts = []
-            forecasts = JSONToForecastArray(URL: url)
-            print(forecasts)
+            let forecasts01 = JSONToForecastArray(URL: url)
+            print(forecasts01 == forecasts!)
         }
         
         
