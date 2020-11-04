@@ -42,31 +42,3 @@ func JSONToForecastArray(URL url: URL) -> [Forecast]?{
     } catch { print(error) }
     return nil
 }
-
-
-
-
-
-
-
-
-
-/*
-struct Sentence : Codable {
-    let sentence : String
-    let lang : String
-}
-
-let sentences = [Sentence(sentence: "Hello world", lang: "en"),
-                 Sentence(sentence: "Hallo Welt", lang: "de")]
-
-do {
-    let jsonData = try JSONEncoder().encode(sentences)
-    let jsonString = String(data: jsonData, encoding: .utf8)!
-    print(jsonString) // [{"sentence":"Hello world","lang":"en"},{"sentence":"Hallo Welt","lang":"de"}]
-
-    // and decode it back
-    let decodedSentences = try JSONDecoder().decode([Sentence].self, from: jsonData)
-    print(decodedSentences)
-} catch { print(error) }
- */
