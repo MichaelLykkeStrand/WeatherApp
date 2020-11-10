@@ -67,7 +67,7 @@ class ViewController: UIViewController {
             self.DailySymbolLabel.text = "☀"
         }
     }
-
+    
     @IBOutlet weak var StackViewConstraint: NSLayoutConstraint!
     
     func viewDidLoadAnimations(){
