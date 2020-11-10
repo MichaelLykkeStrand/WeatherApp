@@ -18,8 +18,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var DailyCityLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        getWeather()
+        viewDidLoadAnimations()
         
+        getWeather()
         let weather01 = Weather(id: 1, main: "main", description: "description", icon: "icon")
         let currentForecast = CurrentForecast(dt: 1, sunrise: 1, sunset: 1, temp: 1, feels_like: 1, pressure: 1, humidity: 1, dew_point: 1, uvi: 1, clouds: 1, wind_speed: 1, wind_deg: 1, weather: [weather01])
         let hourlyForecast = HourlyForecast(dt: 1, temp: 1, feels_like: 1, pressure: 1, humidity: 1, dew_point: 1, clouds: 1, wind_speed: 1, wind_deg: 1, weather: [weather01])
@@ -67,6 +68,18 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBOutlet weak var StackViewConstraint: NSLayoutConstraint!
+    
+    func viewDidLoadAnimations(){
+        self.StackViewConstraint.constant -= self.view.bounds.width
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseOut, animations: {
+            self.StackViewConstraint.constant += self.view.bounds.width
+            self.view.layoutIfNeeded()
+        },completion: nil)
+    }
 
 }
 
