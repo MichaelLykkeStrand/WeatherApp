@@ -78,8 +78,8 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" distribution="equalCentering" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NAE-Mb-DZh">
-                                                <rect key="frame" x="122" y="239" width="170" height="25.333333333333332"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NAE-Mb-DZh">
+                                                <rect key="frame" x="129" y="239" width="170" height="25.333333333333314"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daily humidity:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hdI-4w-n2J">
                                                         <rect key="frame" x="0.0" y="0.0" width="112" height="25.333333333333332"/>
@@ -98,8 +98,10 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstItem="NAE-Mb-DZh" firstAttribute="top" secondItem="0Mk-VP-n6W" secondAttribute="bottom" constant="27.333333333333343" id="JYP-ic-sPz"/>
                                             <constraint firstItem="0Mk-VP-n6W" firstAttribute="centerX" secondItem="fgW-Dr-bbN" secondAttribute="centerX" id="TCY-X0-B6r"/>
                                             <constraint firstItem="0Mk-VP-n6W" firstAttribute="top" secondItem="fgW-Dr-bbN" secondAttribute="top" constant="20" id="a1v-eu-a0k"/>
+                                            <constraint firstItem="NAE-Mb-DZh" firstAttribute="centerX" secondItem="fgW-Dr-bbN" secondAttribute="centerX" id="bOH-7A-XsM"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -125,6 +127,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="CityNameLabel" destination="tFK-IS-4im" id="0nT-5j-60L"/>
+                        <outlet property="DailyHumidityLabel" destination="NyF-cQ-LGm" id="r2g-MR-N1c"/>
+                        <outlet property="DailySymbolLabel" destination="G9l-i6-Mmj" id="Yld-Wi-O3Q"/>
+                        <outlet property="DailyTempLabel" destination="w3l-yN-fsM" id="INC-fg-rFc"/>
                         <outlet property="StackViewConstraint" destination="TCY-X0-B6r" id="Wa5-55-pjz"/>
                     </connections>
                 </viewController>
