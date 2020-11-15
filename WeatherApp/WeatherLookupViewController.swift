@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import GooglePlaces
 
 class WeatherLookupViewController: UIViewController {
 
+    @IBOutlet weak var SearchBar: UINavigationItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
