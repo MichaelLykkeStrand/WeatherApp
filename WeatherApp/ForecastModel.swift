@@ -83,6 +83,6 @@ struct FeelsLike: Codable, Equatable {
     let night: Double
     let eve: Double
     let morn: Double
-}
+}	
 
 
