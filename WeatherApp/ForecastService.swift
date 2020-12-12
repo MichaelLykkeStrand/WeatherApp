@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import GooglePlaces
 
 class ForecastService {
     static let shared = ForecastService()
     
+    var URL_LATITUDE = "10"
+    var URL_LONGITUDE = "10"
     let URL_API_KEY = "dfac6d41feb1c2880980e5dd7ac7e159"
-    var URL_LATITUDE = "-53.11"
-    var URL_LONGITUDE = "73.53"
     var URL_PARAMATER_LIST = ""
     let URL_BASE = "https://api.openweathermap.org/data/2.5/onecall?"
     let session = URLSession(configuration: .default)
@@ -23,9 +24,34 @@ class ForecastService {
         return URL_BASE + URL_PARAMATER_LIST
     }
     
+    func getCurrentLocation() {
+        let locationManager = CLLocationManager()
+        locationManager.requestAlwaysAuthorization()
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue))
+        let placesClient : GMSPlacesClient? = GMSPlacesClient()
+        
+        placesClient?.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
+            (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
+            if let error = error {
+                print("An error occurred: \(error.localizedDescription)")
+                return
+            }
+
+            print("smrdis")
+            
+            if let placeLikelihoodList = placeLikelihoodList {
+            for likelihood in placeLikelihoodList {
+                let place = likelihood.place
+                print("Current Place coordinates \(String(describing: place.coordinate))")
+            }
+            }
+        })
+    }
     
     //TODO - Possibly redo this
     func getWeather(onSuccess: @escaping (Forecast) -> Void, onError: @escaping (String) -> Void) {
+        getCurrentLocation()
+        
         guard let url = URL(string: buildURL()) else {
             onError("Error building URL")
             return
