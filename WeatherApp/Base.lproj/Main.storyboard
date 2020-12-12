@@ -27,6 +27,9 @@
                                 <rect key="frame" x="183" y="353" width="48" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Search"/>
+                                <connections>
+                                    <action selector="autocompleteClicked:" destination="tQG-rM-kbT" eventType="touchUpInside" id="Lg3-Ur-3Nx"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AAm-Ao-kBJ">
                                 <rect key="frame" x="15" y="65" width="385" height="34"/>
