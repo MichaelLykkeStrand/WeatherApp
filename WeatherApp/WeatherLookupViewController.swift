@@ -43,9 +43,20 @@ extension WeatherLookupViewController: GMSAutocompleteViewControllerDelegate {
 
     // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        print("Place name: \(place.name)")
-        print("Place ID: \(place.placeID)")
-        print("Place attributions: \(place.attributions)")
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue))
+        
+        let placesClient : GMSPlacesClient? = GMSPlacesClient()
+        
+        placesClient?.fetchPlace(fromPlaceID: place.placeID!, placeFields: fields, sessionToken: nil, callback: {
+          (place: GMSPlace?, error: Error?) in
+          if let error = error {
+            print("An error occurred: \(error.localizedDescription)")
+            return
+          }
+          if let searchedPlace = place {
+            print("The selected place's coordinates are: \(searchedPlace.coordinate)")
+          }
+        })
         dismiss(animated: true, completion: nil)
     }
 
