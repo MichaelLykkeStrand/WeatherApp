@@ -11,12 +11,14 @@ import GooglePlaces
 
 class ForecastService {
     static let shared = ForecastService()
-    
+    let locationManager : CLLocationManager? = CLLocationManager()
+
     var URL_LATITUDE = "10"
     var URL_LONGITUDE = "10"
     let URL_API_KEY = "dfac6d41feb1c2880980e5dd7ac7e159"
     var URL_PARAMATER_LIST = ""
     let URL_BASE = "https://api.openweathermap.org/data/2.5/onecall?"
+    var URL_WHOLE = ""
     let session = URLSession(configuration: .default)
     
     func buildURL() -> String {
@@ -24,33 +26,16 @@ class ForecastService {
         return URL_BASE + URL_PARAMATER_LIST
     }
     
-    func getCurrentLocation() {
-        let locationManager = CLLocationManager()
-        locationManager.requestAlwaysAuthorization()
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue))
-        let placesClient : GMSPlacesClient? = GMSPlacesClient()
-        
-        placesClient?.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
-            (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
-            if let error = error {
-                print("An error occurred: \(error.localizedDescription)")
-                return
-            }
-
-            print("smrdis")
-            
-            if let placeLikelihoodList = placeLikelihoodList {
-            for likelihood in placeLikelihoodList {
-                let place = likelihood.place
-                print("Current Place coordinates \(String(describing: place.coordinate))")
-            }
-            }
-        })
+    func buildURL(latitude lat : String, longtitude lon : String) -> String {
+        self.URL_LATITUDE = lat
+        self.URL_LONGITUDE = lon
+        self.URL_PARAMATER_LIST = "lat=" + self.URL_LATITUDE + "&lon=" + self.URL_LONGITUDE + "&units=metric" + "&appid=" + self.URL_API_KEY
+        self.URL_WHOLE = self.URL_BASE + self.URL_PARAMATER_LIST
+        return URL_WHOLE
     }
     
     //TODO - Possibly redo this
     func getWeather(onSuccess: @escaping (Forecast) -> Void, onError: @escaping (String) -> Void) {
-        getCurrentLocation()
         
         guard let url = URL(string: buildURL()) else {
             onError("Error building URL")
