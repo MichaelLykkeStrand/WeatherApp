@@ -3,7 +3,7 @@
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -47,11 +47,12 @@
                     <navigationItem key="navigationItem" id="VBc-kI-LNd"/>
                     <connections>
                         <outlet property="SearchBar" destination="VBc-kI-LNd" id="qSf-iR-Tei"/>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="ShowWeatherDetail" id="8Dp-tM-e7o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ryZ-2c-Hhl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="298.55072463768118" y="130.43478260869566"/>
+            <point key="canvasLocation" x="374" y="130"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -186,6 +187,9 @@
             <point key="canvasLocation" x="-607.24637681159425" y="130.43478260869566"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="8Dp-tM-e7o"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="placeholderTextColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>

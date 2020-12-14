@@ -9,14 +9,22 @@
 import UIKit
 import GooglePlaces
 
-class WeatherLookupViewController: UIViewController {
+class WeatherLookupViewController: UIViewController, UISplitViewControllerDelegate {
 
     @IBOutlet weak var SearchBar: UINavigationItem!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+    }
+    
+    override func awakeFromNib() {
+        splitViewController?.delegate = self
+    }
+
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        return true
     }
     
     // Present the Autocomplete view controller when the button is pressed.
@@ -38,6 +46,7 @@ class WeatherLookupViewController: UIViewController {
         present(autocompleteController, animated: true, completion: nil)
     }
 }
+var searchPlace : GMSPlace? = nil
 
 extension WeatherLookupViewController: GMSAutocompleteViewControllerDelegate {
 
@@ -54,7 +63,9 @@ extension WeatherLookupViewController: GMSAutocompleteViewControllerDelegate {
             return
           }
           if let searchedPlace = place {
+            searchPlace = place
             print("The selected place's coordinates are: \(searchedPlace.coordinate)")
+            self.performSegue(withIdentifier: "ShowWeatherDetail", sender: self)
           }
         })
         dismiss(animated: true, completion: nil)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController{
 
     var weatherResult: Forecast?
     
@@ -40,9 +40,9 @@ class ViewController: UIViewController {
             let forecasts01 = JSONToForecastArray(URL: url)
             print(forecasts01 == forecasts!)
         }
-        
-        
     }
+    
+
     
     func getWeather() {
         ForecastService.shared.getWeather(onSuccess: { (result) in
