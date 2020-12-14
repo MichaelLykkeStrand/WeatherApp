@@ -39,7 +39,19 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="A4w-b8-Tfi"/>
                     </view>
-                    <navigationItem key="navigationItem" id="VBc-kI-LNd"/>
+                    <navigationItem key="navigationItem" id="VBc-kI-LNd">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="BOa-kl-olp">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gD7-oH-RgZ">
+                                <rect key="frame" x="302" y="7" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="addButtonAction:" destination="tQG-rM-kbT" eventType="touchUpInside" id="tEX-cW-Dsv"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="SearchBar" destination="VBc-kI-LNd" id="qSf-iR-Tei"/>
                         <outlet property="tableView" destination="YRK-B0-ibL" id="xhB-rj-T1X"/>

@@ -8,14 +8,10 @@
 
 import Foundation
 
-func forecastArrayToJSON(Forecasts forecasts: Array<Forecast>) -> URL?{
+func forecastArrayToJSON(Forecasts forecasts: Array<ForecastStorageModel>) -> URL?{
     do {
         let jsonData = try JSONEncoder().encode(forecasts)
-        //print(forecasts)
         let jsonString = String(data: jsonData, encoding: .utf8)!
-
-        //let decodedForecasts = try JSONDecoder().decode([Forecast].self, from: jsonData)
-        //print(decodedForecasts)
         do{
             let url : URL = try FileManager.default.url(
             for : FileManager.SearchPathDirectory.applicationSupportDirectory,
@@ -33,10 +29,10 @@ func forecastArrayToJSON(Forecasts forecasts: Array<Forecast>) -> URL?{
     return nil
 }
 
-func JSONToForecastArray(URL url: URL) -> [Forecast]?{
+func JSONToForecastArray(URL url: URL) -> [ForecastStorageModel]?{
     do {
         let jsonData = try Data(contentsOf:url, options: [.alwaysMapped , .uncached ] )
-        let decodedForecasts = try JSONDecoder().decode([Forecast].self, from: jsonData)
+        let decodedForecasts = try JSONDecoder().decode([ForecastStorageModel].self, from: jsonData)
         //print(decodedForecasts)
         return (decodedForecasts)
     } catch { print(error) }

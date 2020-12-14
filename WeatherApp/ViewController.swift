@@ -14,6 +14,7 @@ class ViewController: UIViewController{
 
     var weatherResult: Forecast?
     
+    
     @IBOutlet weak var CityNameLabel: UILabel!
     @IBOutlet weak var DailyTempLabel: UILabel!
     @IBOutlet weak var DailySymbolLabel: UILabel!
@@ -23,18 +24,18 @@ class ViewController: UIViewController{
         super.viewDidLoad()
         
         viewDidLoadAnimations()
-    
-        getWeather()
-        ForecastService.shared.getCurrentLocation()
+
+        //ForecastService.shared.getCurrentLocation()
         updateWeatherView()
     }
     
-
-    
-    func getWeather() {
+    func updateWeather(name: String, lat: Double, lon: Double) {
+        ForecastService.shared.setLatitude(lat)
+        ForecastService.shared.setLongitude(lon)
         ForecastService.shared.getWeather(onSuccess: { (result) in
             self.weatherResult = result
             self.updateWeatherView()
+            
         }) { (errorMessage) in
             debugPrint(errorMessage)
         }
@@ -44,15 +45,15 @@ class ViewController: UIViewController{
         guard let weatherResult = weatherResult else {
             return
         }
-        
-        self.DailyTempLabel.text = "\(weatherResult.current.temp)°C"
-        self.DailyHumidityLabel.text = "\(weatherResult.daily[1].humidity)%"
+        self.CityNameLabel?.text =
+        self.DailyTempLabel?.text = "\(weatherResult.current.temp)°C"
+        self.DailyHumidityLabel?.text = "\(weatherResult.daily[1].humidity)%"
         
         print(weatherResult.current.clouds)
         if(weatherResult.current.clouds > 50){
-            self.DailySymbolLabel.text = "☁"
+            self.DailySymbolLabel?.text = "☁"
         } else {
-            self.DailySymbolLabel.text = "☀"
+            self.DailySymbolLabel?.text = "☀"
         }
     }
     

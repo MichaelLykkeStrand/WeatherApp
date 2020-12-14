@@ -15,10 +15,16 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
     
     @IBOutlet weak var tableView: UITableView!
     
+    let defaults = UserDefaults.standard
+    let cellReuseIdentifier = "cell"
+    
     var locationManager: CLLocationManager?
+    var savedLocations: [ForecastStorageModel]?
+    var selectedLocation: ForecastStorageModel?
 
     override func awakeFromNib() {
         splitViewController?.delegate = self
+        savedLocations = defaults.array(forKey: "SavedLocations") as? [ForecastStorageModel]
     }
     
     override func viewDidLoad() {
@@ -28,24 +34,43 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
             locationManager!.requestAlwaysAuthorization()
         }
         // Do any additional setup after loading the view.
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView?.delegate = self
         tableView?.dataSource = self
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return self.savedLocations?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        // create a new cell if needed or reuse an old one
+        let cell:UITableViewCell = (self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
+        
+        cell.textLabel?.text = self.savedLocations?[indexPath.row].name
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+        selectedLocation = savedLocations?[indexPath.row]
+        if selectedLocation != nil {
+            self.performSegue(withIdentifier: "ShowWeatherDetail", sender: self)
+        } else {
+            print("no location was selected")
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        <#code#>
+        if editingStyle == .delete {
+            // delete item from source
+            savedLocations?.remove(at: indexPath.row)
+            // delete item from tableview
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            // save changes to disk
+            UserDefaults.standard.synchronize()
+        } else if editingStyle == .insert {
+            autoComplete()
+        }
     }
 
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
@@ -54,6 +79,16 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
     
     // Present the Autocomplete view controller when the button is pressed.
     @IBAction func autocompleteClicked(_ sender: UIButton) {
+        autoComplete()
+    }
+    
+    
+    
+    @IBAction func addButtonAction(_ sender: Any) {
+        autoComplete()
+    }
+    
+    func autoComplete(){
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
 
@@ -64,32 +99,43 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
 
         // Specify a filter.
         let filter = GMSAutocompleteFilter()
-        filter.type = .address
+        filter.type = .city
         autocompleteController.autocompleteFilter = filter
 
         // Display the autocomplete view controller.
         present(autocompleteController, animated: true, completion: nil)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowWeatherDetail" {
+            if let destVC = segue.destination as? ViewController {
+                destVC.updateWeather(name: (selectedLocation?.name)!, lat: (selectedLocation?.lat)!, lon: (selectedLocation?.lon)!)
+            }
+        }
+    }
 }
 var searchPlace : GMSPlace? = nil
 
 extension WeatherLookupViewController: GMSAutocompleteViewControllerDelegate {
-
+    
     // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue))
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue) | UInt(GMSPlaceField.name.rawValue))
         
         let placesClient : GMSPlacesClient? = GMSPlacesClient()
         
         placesClient?.fetchPlace(fromPlaceID: place.placeID!, placeFields: fields, sessionToken: nil, callback: {
           (place: GMSPlace?, error: Error?) in
           if let error = error {
-            print("An error occurred: \(error.localizedDescription)")
+            //print("An error occurred: \(error.localizedDescription)")
             return
           }
           if let searchedPlace = place {
             searchPlace = place
-            print("The selected place's coordinates are: \(searchedPlace.coordinate)")
+            //print("The selected place's coordinates are: \(searchedPlace.coordinate)")
+            let newLocation = ForecastStorageModel(name: searchedPlace.name, lat: searchedPlace.coordinate.latitude, lon: searchedPlace.coordinate.longitude)
+            self.selectedLocation = newLocation
+            print("The selected place's name \(searchedPlace.name)")
             self.performSegue(withIdentifier: "ShowWeatherDetail", sender: self)
           }
         })
@@ -98,7 +144,7 @@ extension WeatherLookupViewController: GMSAutocompleteViewControllerDelegate {
 
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
         // TODO: handle the error.
-        print("Error: ", error.localizedDescription)
+        //print("Error: ", error.localizedDescription)
         }
 
     // User canceled the operation.
