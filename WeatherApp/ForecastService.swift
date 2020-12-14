@@ -25,8 +25,6 @@ class ForecastService {
     }
     
     func getCurrentLocation() {
-        let locationManager = CLLocationManager()
-        locationManager.requestAlwaysAuthorization()
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue))
         let placesClient : GMSPlacesClient? = GMSPlacesClient()
         
@@ -43,6 +41,8 @@ class ForecastService {
             for likelihood in placeLikelihoodList {
                 let place = likelihood.place
                 print("Current Place coordinates \(String(describing: place.coordinate))")
+                ForecastService.shared.setLongitude(place.coordinate.longitude)
+                ForecastService.shared.setLatitude(place.coordinate.latitude)
             }
             }
         })

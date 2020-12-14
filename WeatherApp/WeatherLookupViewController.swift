@@ -9,18 +9,43 @@
 import UIKit
 import GooglePlaces
 
-class WeatherLookupViewController: UIViewController, UISplitViewControllerDelegate {
+class WeatherLookupViewController: UIViewController, UISplitViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var SearchBar: UINavigationItem!
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    var locationManager: CLLocationManager?
+
+    override func awakeFromNib() {
+        splitViewController?.delegate = self
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager = CLLocationManager()
+        if locationManager != nil {
+            locationManager!.requestAlwaysAuthorization()
+        }
         // Do any additional setup after loading the view.
+        tableView?.delegate = self
+        tableView?.dataSource = self
     }
     
-    override func awakeFromNib() {
-        splitViewController?.delegate = self
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        <#code#>
     }
 
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
