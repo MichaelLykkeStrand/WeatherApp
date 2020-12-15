@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ForecastStorageModel: Codable, Equatable {
+struct LocationModel: Codable, Equatable {
     var name: String?
     var lat: Double?
     var lon: Double?

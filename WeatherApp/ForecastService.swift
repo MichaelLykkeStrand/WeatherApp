@@ -40,7 +40,7 @@ class ForecastService {
             if let placeLikelihoodList = placeLikelihoodList {
             for likelihood in placeLikelihoodList {
                 let place = likelihood.place
-                print("Current Place coordinates \(String(describing: place.coordinate))")
+                //print("Current Place coordinates \(String(describing: place.coordinate))")
                 ForecastService.shared.setLongitude(place.coordinate.longitude)
                 ForecastService.shared.setLatitude(place.coordinate.latitude)
             }

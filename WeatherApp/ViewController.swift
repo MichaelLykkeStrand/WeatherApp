@@ -13,7 +13,7 @@ import CoreLocation
 class ViewController: UIViewController{
 
     var weatherResult: Forecast?
-    
+    var forecast: LocationModel?
     
     @IBOutlet weak var CityNameLabel: UILabel!
     @IBOutlet weak var DailyTempLabel: UILabel!
@@ -29,28 +29,29 @@ class ViewController: UIViewController{
         updateWeatherView()
     }
     
-    func updateWeather(name: String, lat: Double, lon: Double) {
-        ForecastService.shared.setLatitude(lat)
-        ForecastService.shared.setLongitude(lon)
+    func updateWeather(forecastmodel: LocationModel) {
+        self.forecast = forecastmodel
+        ForecastService.shared.setLatitude(forecastmodel.lat!)
+        ForecastService.shared.setLongitude(forecastmodel.lon!)
         ForecastService.shared.getWeather(onSuccess: { (result) in
-            self.weatherResult = result
-            self.updateWeatherView()
+            //self.weatherResult = result
+            self.forecast?.latestForecast = result
             
         }) { (errorMessage) in
-            debugPrint(errorMessage)
+            debugPrint("Error occured fetching new weather ->\(errorMessage)")
         }
     }
     
     func updateWeatherView() {
-        guard let weatherResult = weatherResult else {
+        guard let forecast = forecast else {
             return
         }
-        self.CityNameLabel?.text =
-        self.DailyTempLabel?.text = "\(weatherResult.current.temp)°C"
-        self.DailyHumidityLabel?.text = "\(weatherResult.daily[1].humidity)%"
+        self.CityNameLabel?.text = "\(forecast.name!)"
+        self.DailyTempLabel?.text = "\((forecast.latestForecast?.current.temp)!)°C"
+        self.DailyHumidityLabel?.text = "\((forecast.latestForecast?.daily[1].humidity)!    )%"
         
-        print(weatherResult.current.clouds)
-        if(weatherResult.current.clouds > 50){
+        
+        if((forecast.latestForecast?.current.clouds)! > 50){
             self.DailySymbolLabel?.text = "☁"
         } else {
             self.DailySymbolLabel?.text = "☀"
