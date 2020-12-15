@@ -11,22 +11,27 @@ import Foundation
 import CoreLocation
 
 class ViewController: UIViewController{
-
-    var weatherResult: Forecast?
-    var forecast: LocationModel?
     
     @IBOutlet weak var CityNameLabel: UILabel!
     @IBOutlet weak var DailyTempLabel: UILabel!
     @IBOutlet weak var DailySymbolLabel: UILabel!
     @IBOutlet weak var DailyHumidityLabel: UILabel!
+    @IBOutlet weak var HourOneTempLabel: UILabel!
+    
+    var weatherResult: Forecast?
+    var forecast: LocationModel?
+    
+    let date = Date()
+    let calendar = Calendar.current
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         viewDidLoadAnimations()
-
         //ForecastService.shared.getCurrentLocation()
         updateWeatherView()
+        
+        
     }
     
     func updateWeather(forecastmodel: LocationModel) {
@@ -46,12 +51,15 @@ class ViewController: UIViewController{
         guard let forecast = forecast else {
             return
         }
-        self.CityNameLabel?.text = "\(forecast.name!)"
-        self.DailyTempLabel?.text = "\((forecast.latestForecast?.current.temp)!)°C"
-        self.DailyHumidityLabel?.text = "\((forecast.latestForecast?.daily[1].humidity)!    )%"
+        self.CityNameLabel?.text = "\(forecast.name ?? "Name unavailable")"
+        self.DailyTempLabel?.text = "\((forecast.latestForecast?.current.temp ?? -9999))°C"
+        self.DailyHumidityLabel?.text = "\(forecast.latestForecast?.daily[0].humidity ?? -1)%"
         
+        let hour = calendar.component(.hour, from: date)
+        print("Hour: \(hour)")
+        self.HourOneTempLabel?.text = "\(forecast.latestForecast?.hourly[3].temp ?? -9999)°C"
         
-        if((forecast.latestForecast?.current.clouds)! > 50){
+        if((forecast.latestForecast?.current.clouds) ?? 0 > 50){
             self.DailySymbolLabel?.text = "☁"
         } else {
             self.DailySymbolLabel?.text = "☀"
