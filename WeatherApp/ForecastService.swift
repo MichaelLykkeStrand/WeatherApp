@@ -14,12 +14,12 @@ class ForecastService {
     
     var URL_LATITUDE = "10"
     var URL_LONGITUDE = "10"
-    let URL_API_KEY = "dfac6d41feb1c2880980e5dd7ac7e159"
     var URL_PARAMATER_LIST = ""
+    let URL_API_KEY = "dfac6d41feb1c2880980e5dd7ac7e159"
     let URL_BASE = "https://api.openweathermap.org/data/2.5/onecall?"
     let session = URLSession(configuration: .default)
     
-    func buildURL() -> String {
+    func buildURL(Latitude lat: String, Longitude lon: String) -> String {
         URL_PARAMATER_LIST = "lat=" + URL_LATITUDE + "&lon=" + URL_LONGITUDE + "&units=metric" + "&appid=" + URL_API_KEY
         return URL_BASE + URL_PARAMATER_LIST
     }
@@ -49,10 +49,10 @@ class ForecastService {
     }
     
     //TODO - Possibly redo this
-    func getWeather(testing test: String, onSuccess: @escaping (Forecast) -> Void, onError: @escaping (String) -> Void) {
-        getCurrentLocation()
+    func getWeather(Latitude lat: String, Longitude lon: String, onSuccess: @escaping (Forecast) -> Void, onError: @escaping (String) -> Void) {
+        //getCurrentLocation()
         
-        guard let url = URL(string: buildURL()) else {
+        guard let url = URL(string: buildURL(Latitude: lat, Longitude: lon)) else {
             onError("Error building URL")
             return
         }

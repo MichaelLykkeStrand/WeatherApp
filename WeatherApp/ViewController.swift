@@ -31,9 +31,9 @@ class ViewController: UIViewController{
     
     func updateWeather(forecastmodel: LocationModel) {
         self.forecast = forecastmodel
-        ForecastService.shared.setLatitude(forecastmodel.lat!)
-        ForecastService.shared.setLongitude(forecastmodel.lon!)
-        ForecastService.shared.getWeather(onSuccess: { (result) in
+        //ForecastService.shared.setLatitude(forecastmodel.lat!)
+        //ForecastService.shared.setLongitude(forecastmodel.lon!)
+        ForecastService.shared.getWeather(Latitude: String(forecastmodel.lat!), Longitude: String(forecastmodel.lon!), onSuccess: { (result) in
             //self.weatherResult = result
             self.forecast?.latestForecast = result
             
