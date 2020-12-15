@@ -49,7 +49,7 @@ class ForecastService {
     }
     
     //TODO - Possibly redo this
-    func getWeather(onSuccess: @escaping (Forecast) -> Void, onError: @escaping (String) -> Void) {
+    func getWeather(testing test: String, onSuccess: @escaping (Forecast) -> Void, onError: @escaping (String) -> Void) {
         getCurrentLocation()
         
         guard let url = URL(string: buildURL()) else {

@@ -12,6 +12,7 @@ import GooglePlaces
 class WeatherLookupViewController: UIViewController, UISplitViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var SearchBar: UINavigationItem!
+    @IBOutlet weak var testOfStorageLabelYes: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -24,7 +25,10 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
 
     override func awakeFromNib() {
         splitViewController?.delegate = self
-        savedLocations = defaults.array(forKey: "SavedLocations") as? [LocationModel]
+        savedLocations = StorageService.json.JSONToForecastArray(Filename: "locations")
+        if savedLocations == nil {
+            savedLocations = [LocationModel]()
+        }
     }
     
     override func viewDidLoad() {
@@ -67,7 +71,8 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
             // delete item from tableview
             tableView.deleteRows(at: [indexPath], with: .fade)
             // save changes to disk
-            UserDefaults.standard.synchronize()
+            guard let l = savedLocations else { return }
+            StorageService.json.forecastArrayToJSON(Forecasts: l, Filename: "locations")
         } else if editingStyle == .insert {
             autoComplete()
         }
@@ -129,16 +134,21 @@ extension WeatherLookupViewController: GMSAutocompleteViewControllerDelegate {
         placesClient?.fetchPlace(fromPlaceID: place.placeID!, placeFields: fields, sessionToken: nil, callback: {
           (place: GMSPlace?, error: Error?) in
           if let error = error {
-            //print("An error occurred: \(error.localizedDescription)")
+            print("An error occurred: \(error.localizedDescription)")
             return
           }
           if let searchedPlace = place {
             searchPlace = place
             //print("The selected place's coordinates are: \(searchedPlace.coordinate)")
             let newLocation = LocationModel(name: searchedPlace.name, lat: searchedPlace.coordinate.latitude, lon: searchedPlace.coordinate.longitude)
-            self.selectedLocation = newLocation
-            //print("The selected place's name \(searchedPlace.name)")
-            self.performSegue(withIdentifier: "ShowWeatherDetail", sender: self)
+            self.savedLocations?.append(newLocation)
+            guard let l = self.savedLocations else { return }
+            self.testOfStorageLabelYes?.text = self.savedLocations?[0].name
+            StorageService.json.forecastArrayToJSON(Forecasts: l, Filename: "locations")
+            //dispatch refreshing the view with new data to async thread
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
           }
         })
         dismiss(animated: true, completion: nil)

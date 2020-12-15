@@ -35,6 +35,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cML-SQ-SI7">
+                                <rect key="frame" x="173" y="177" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="A4w-b8-Tfi"/>
@@ -55,6 +62,7 @@
                     <connections>
                         <outlet property="SearchBar" destination="VBc-kI-LNd" id="qSf-iR-Tei"/>
                         <outlet property="tableView" destination="YRK-B0-ibL" id="xhB-rj-T1X"/>
+                        <outlet property="testOfStorageLabelYes" destination="cML-SQ-SI7" id="WE9-vf-Ts3"/>
                         <segue destination="BYZ-38-t0r" kind="showDetail" identifier="ShowWeatherDetail" id="8Dp-tM-e7o"/>
                     </connections>
                 </viewController>
