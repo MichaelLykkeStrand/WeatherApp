@@ -12,7 +12,6 @@ import GooglePlaces
 class WeatherLookupViewController: UIViewController, UISplitViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var SearchBar: UINavigationItem!
-    @IBOutlet weak var testOfStorageLabelYes: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -142,7 +141,6 @@ extension WeatherLookupViewController: GMSAutocompleteViewControllerDelegate {
             let newLocation = LocationModel(name: searchedPlace.name, lat: searchedPlace.coordinate.latitude, lon: searchedPlace.coordinate.longitude)
             self.savedLocations?.append(newLocation)
             guard let l = self.savedLocations else { return }
-            self.testOfStorageLabelYes?.text = self.savedLocations?[0].name
             StorageService.json.forecastArrayToJSON(Forecasts: l, Filename: "locations")
             //dispatch refreshing the view with new data to async thread
             DispatchQueue.main.async {

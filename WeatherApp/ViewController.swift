@@ -21,6 +21,7 @@ class ViewController: UIViewController{
     
     var weatherResult: Forecast?
     var location: LocationModel?
+    var didAnimations = false
     
     let date = Date()
     let calendar = Calendar.current
@@ -72,10 +73,15 @@ class ViewController: UIViewController{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseOut, animations: {
-            self.StackViewConstraint.constant += self.view.bounds.width
-            self.view.layoutIfNeeded()
-        },completion: nil)
+        if !didAnimations {
+            UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseOut, animations: {
+                self.StackViewConstraint.constant += self.view.bounds.width
+                self.view.layoutIfNeeded()
+            },completion: { _ in
+                self.didAnimations = true
+            })
+        }
+
     }
 
 }
