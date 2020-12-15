@@ -73,8 +73,6 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
             // save changes to disk
             guard let l = savedLocations else { return }
             StorageService.json.forecastArrayToJSON(Forecasts: l, Filename: "locations")
-        } else if editingStyle == .insert {
-            autoComplete()
         }
     }
 
@@ -115,8 +113,9 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
         if segue.identifier == "ShowWeatherDetail" {
             if let destVC = segue.destination as? ViewController {
                 //move this
-                savedLocations?.append(selectedLocation!)
-                destVC.updateWeather(forecastmodel: selectedLocation!)
+                //savedLocations?.append(selectedLocation!)
+                guard let l = selectedLocation else { return }
+                destVC.updateWeather(forecastmodel: l)
             }
         }
     }

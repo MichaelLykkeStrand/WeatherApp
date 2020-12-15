@@ -20,7 +20,7 @@ class ViewController: UIViewController{
     
     
     var weatherResult: Forecast?
-    var forecast: LocationModel?
+    var location: LocationModel?
     
     let date = Date()
     let calendar = Calendar.current
@@ -29,27 +29,25 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         viewDidLoadAnimations()
-        //ForecastService.shared.getCurrentLocation()
-        updateWeatherView()
         
         
     }
     
     func updateWeather(forecastmodel: LocationModel) {
-        self.forecast = forecastmodel
+        self.location = forecastmodel
         //ForecastService.shared.setLatitude(forecastmodel.lat!)
         //ForecastService.shared.setLongitude(forecastmodel.lon!)
         ForecastService.shared.getWeather(Latitude: String(forecastmodel.lat!), Longitude: String(forecastmodel.lon!), onSuccess: { (result) in
             //self.weatherResult = result
-            self.forecast?.latestForecast = result
-            
+            self.location?.latestForecast = result
+            self.updateWeatherView()
         }) { (errorMessage) in
             debugPrint("Error occured fetching new weather ->\(errorMessage)")
         }
     }
     
     func updateWeatherView() {
-        guard let forecast = forecast else {
+        guard let forecast = self.location else {
             return
         }
         self.CityNameLabel?.text = "\(forecast.name ?? "Name unavailable")"

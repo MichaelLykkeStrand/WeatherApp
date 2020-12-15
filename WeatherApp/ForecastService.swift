@@ -20,7 +20,7 @@ class ForecastService {
     let session = URLSession(configuration: .default)
     
     func buildURL(Latitude lat: String, Longitude lon: String) -> String {
-        URL_PARAMATER_LIST = "lat=" + URL_LATITUDE + "&lon=" + URL_LONGITUDE + "&units=metric" + "&appid=" + URL_API_KEY
+        URL_PARAMATER_LIST = "lat=" + lat + "&lon=" + lon + "&units=metric" + "&appid=" + URL_API_KEY
         return URL_BASE + URL_PARAMATER_LIST
     }
     
