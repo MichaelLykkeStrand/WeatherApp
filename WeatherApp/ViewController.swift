@@ -18,6 +18,7 @@ class ViewController: UIViewController{
     @IBOutlet weak var DailyHumidityLabel: UILabel!
     @IBOutlet weak var HourOneTempLabel: UILabel!
     
+    
     var weatherResult: Forecast?
     var forecast: LocationModel?
     
