@@ -54,12 +54,16 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
         return cell
     }
     
+    //Cell clicked in table
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedLocation = savedLocations?[indexPath.row]
-        if selectedLocation != nil {
+        if selectedLocation?.latestForecast != nil {
             self.performSegue(withIdentifier: "ShowWeatherDetail", sender: self)
         } else {
-            print("no location was selected")
+            //Create alert if unable to load data
+            let alert = UIAlertController(title: "Weather unavailable", message: "Make sure you are connected to the internet", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -78,14 +82,6 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
     }
-    
-    // Present the Autocomplete view controller when the button is pressed.
-    @IBAction func autocompleteClicked(_ sender: UIButton) {
-        autoComplete()
-    }
-    
-    
-    
     @IBAction func addButtonAction(_ sender: Any) {
         autoComplete()
     }
@@ -111,10 +107,9 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowWeatherDetail" {
             if let destVC = segue.destination as? ViewController {
-                //move this
-                //savedLocations?.append(selectedLocation!)
                 guard let l = selectedLocation else { return }
                 destVC.updateWeather(forecastmodel: l)
+                
             }
         }
     }
