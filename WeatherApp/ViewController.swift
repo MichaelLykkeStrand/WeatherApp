@@ -56,6 +56,7 @@ class ViewController: UIViewController{
         self.DailyHumidityLabel?.text = "\(forecast.latestForecast?.daily[0].humidity ?? -1)%"
         
         var date = Date()
+        
         date = calendar.date(byAdding: .hour, value: 3, to: date)!
         let hour = calendar.component(.hour, from: date)
         TimeOneLabel.text = "\(hour):00"
@@ -86,7 +87,7 @@ class ViewController: UIViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         if !didAnimations {
-            UIView.animate(withDuration: 0.5, delay: 0.5, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseOut, animations: {
                 self.StackViewConstraint.constant += self.view.bounds.width*2
                 self.view.layoutIfNeeded()
             },completion: { _ in
