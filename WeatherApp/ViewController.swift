@@ -33,7 +33,11 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         viewDidLoadAnimations()
-        
+        displayTime()
+    }
+    
+    private func displayTime(){
+        //Set time on labels
         var date = Date()
         date = calendar.date(byAdding: .hour, value: 3, to: date)!
         let hour = calendar.component(.hour, from: date)
@@ -48,10 +52,7 @@ class ViewController: UIViewController{
     
     func updateWeather(forecastmodel: LocationModel) {
         self.location = forecastmodel
-        //ForecastService.shared.setLatitude(forecastmodel.lat!)
-        //ForecastService.shared.setLongitude(forecastmodel.lon!)
         ForecastService.shared.getWeather(Latitude: String(forecastmodel.lat!), Longitude: String(forecastmodel.lon!), onSuccess: { (result) in
-            //self.weatherResult = result
             self.location?.latestForecast = result
             self.updateWeatherView()
         }) { (errorMessage) in
@@ -71,11 +72,7 @@ class ViewController: UIViewController{
         self.CityNameLabel?.text = "\(forecast.name ?? "Name unavailable")"
         self.DailyTempLabel?.text = "\((forecast.latestForecast?.current.temp ?? -9999))°C"
         self.DailyHumidityLabel?.text = "\(forecast.latestForecast?.daily[0].humidity ?? -1)%"
-        
         self.DailyFeelsLikeLabel?.text = "Feels like \(forecast.latestForecast?.current.feels_like ?? -9999)°C"
-        
-
-        
         self.HourOneTempLabel?.text = "\(forecast.latestForecast?.hourly[3].temp ?? -9999)°C"
         self.HourTwoTempLabel?.text = "\(forecast.latestForecast?.hourly[6].temp ?? -9999)°C"
         self.HourThreeTempLabel?.text = "\(forecast.latestForecast?.hourly[9].temp ?? -9999)°C"
@@ -105,13 +102,10 @@ class ViewController: UIViewController{
                 self.LowerStackViewConstraint.constant -= self.view.bounds.height*2
                 self.ScrollView.alpha = 100
                 self.view.layoutIfNeeded()
-                
             },completion: { _ in
                 self.didAnimations = true
             })
         }
-
     }
-
 }
 

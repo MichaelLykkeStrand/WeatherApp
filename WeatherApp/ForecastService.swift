@@ -58,7 +58,7 @@ class ForecastService {
         }
         
         let task = session.dataTask(with: url) { (data, response, error) in
-            
+            //offload work to main queue
             DispatchQueue.main.async {
                 if let error = error {
                     onError(error.localizedDescription)
