@@ -108,18 +108,6 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
         present(autocompleteController, animated: true, completion: nil)
     }
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if selectedLocation?.latestForecast == nil {
-            //Create alert if unable to load data
-            let alert = UIAlertController(title: "Weather unavailable", message: "Make sure you are connected to the internet", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
-            return false
-        }
-        return true
-    }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowWeatherDetail" {

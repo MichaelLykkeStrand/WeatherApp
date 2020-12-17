@@ -44,6 +44,11 @@ class ViewController: UIViewController{
             self.updateWeatherView()
         }) { (errorMessage) in
             debugPrint("Error occured fetching new weather ->\(errorMessage)")
+            //Create alert if unable to load data
+            let alert = UIAlertController(title: "Weather servers unavailable", message: "Using cached data from \(self.location!.latestForecast?.current.dt ?? 0)", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            _ = self.navigationController?.popViewController(animated: true)
         }
     }
     
