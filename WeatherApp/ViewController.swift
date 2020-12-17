@@ -22,6 +22,7 @@ class ViewController: UIViewController{
     @IBOutlet weak var TimeOneLabel: UILabel!
     @IBOutlet weak var TimeTwoLabel: UILabel!
     @IBOutlet weak var TimeThreeLabel: UILabel!
+    @IBOutlet weak var DailyFeelsLikeLabel: UILabel!
     
     var weatherResult: Forecast?
     var location: LocationModel?
@@ -60,6 +61,8 @@ class ViewController: UIViewController{
         self.DailyTempLabel?.text = "\((forecast.latestForecast?.current.temp ?? -9999))°C"
         self.DailyHumidityLabel?.text = "\(forecast.latestForecast?.daily[0].humidity ?? -1)%"
         
+        self.DailyFeelsLikeLabel?.text = "Feels like \(forecast.latestForecast?.current.feels_like ?? -9999)°C"
+        
         var date = Date()
         
         date = calendar.date(byAdding: .hour, value: 3, to: date)!
@@ -86,6 +89,7 @@ class ViewController: UIViewController{
     
     @IBOutlet weak var StackViewConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var ContentViewConstraint: NSLayoutConstraint!
     func viewDidLoadAnimations(){
         self.StackViewConstraint.constant -= self.view.bounds.width*2
     }
