@@ -79,12 +79,6 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
         return true
     }
     
-    // Present the Autocomplete view controller when the button is pressed.
-    @IBAction func autocompleteClicked(_ sender: UIButton) {
-        autoComplete()
-    }
-    
-    
     
     @IBAction func addButtonAction(_ sender: Any) {
         autoComplete()

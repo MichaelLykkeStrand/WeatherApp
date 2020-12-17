@@ -33,6 +33,17 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         viewDidLoadAnimations()
+        
+        var date = Date()
+        date = calendar.date(byAdding: .hour, value: 3, to: date)!
+        let hour = calendar.component(.hour, from: date)
+        TimeOneLabel.text = "\(hour):00"
+        date = calendar.date(byAdding: .hour, value: 3, to: date)!
+        let hour2 = calendar.component(.hour, from: date)
+        TimeTwoLabel.text = "\(hour2):00"
+        date = calendar.date(byAdding: .hour, value: 3, to: date)!
+        let hour3 = calendar.component(.hour, from: date)
+        TimeThreeLabel.text = "\(hour3):00"
     }
     
     func updateWeather(forecastmodel: LocationModel) {
@@ -63,19 +74,8 @@ class ViewController: UIViewController{
         
         self.DailyFeelsLikeLabel?.text = "Feels like \(forecast.latestForecast?.current.feels_like ?? -9999)°C"
         
-        var date = Date()
+
         
-        date = calendar.date(byAdding: .hour, value: 3, to: date)!
-        let hour = calendar.component(.hour, from: date)
-        TimeOneLabel.text = "\(hour):00"
-        date = calendar.date(byAdding: .hour, value: 3, to: date)!
-        let hour2 = calendar.component(.hour, from: date)
-        TimeTwoLabel.text = "\(hour2):00"
-        date = calendar.date(byAdding: .hour, value: 3, to: date)!
-        let hour3 = calendar.component(.hour, from: date)
-        TimeThreeLabel.text = "\(hour3):00"
-        
-        print("Hour: \(hour)")
         self.HourOneTempLabel?.text = "\(forecast.latestForecast?.hourly[3].temp ?? -9999)°C"
         self.HourTwoTempLabel?.text = "\(forecast.latestForecast?.hourly[6].temp ?? -9999)°C"
         self.HourThreeTempLabel?.text = "\(forecast.latestForecast?.hourly[9].temp ?? -9999)°C"
@@ -88,17 +88,24 @@ class ViewController: UIViewController{
     }
     
     @IBOutlet weak var StackViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var ScrollView: UIScrollView!
+    @IBOutlet weak var LowerStackViewConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var ContentViewConstraint: NSLayoutConstraint!
     func viewDidLoadAnimations(){
         self.StackViewConstraint.constant -= self.view.bounds.width*2
+        self.LowerStackViewConstraint.constant += self.view.bounds.height*2
+        self.ScrollView.alpha = 0
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         if !didAnimations {
-            UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0.2, options: .curveEaseOut, animations: {
                 self.StackViewConstraint.constant += self.view.bounds.width*2
+                self.LowerStackViewConstraint.constant -= self.view.bounds.height*2
+                self.ScrollView.alpha = 100
                 self.view.layoutIfNeeded()
+                
             },completion: { _ in
                 self.didAnimations = true
             })
