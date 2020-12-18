@@ -24,33 +24,7 @@ class ForecastService {
         return URL_BASE + URL_PARAMATER_LIST
     }
     
-    func getCurrentLocation() {
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue))
-        let placesClient : GMSPlacesClient? = GMSPlacesClient()
-        
-        placesClient?.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
-            (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
-            if let error = error {
-                print("An error occurred: \(error.localizedDescription)")
-                return
-            }
-
-            print("smrdis")
-            
-            if let placeLikelihoodList = placeLikelihoodList {
-            for likelihood in placeLikelihoodList {
-                let place = likelihood.place
-                //print("Current Place coordinates \(String(describing: place.coordinate))")
-                ForecastService.shared.setLongitude(place.coordinate.longitude)
-                ForecastService.shared.setLatitude(place.coordinate.latitude)
-            }
-            }
-        })
-    }
-    
-    //TODO - Possibly redo this
     func getWeather(Latitude lat: String, Longitude lon: String, onSuccess: @escaping (Forecast) -> Void, onError: @escaping (String) -> Void) {
-        //getCurrentLocation()
         
         guard let url = URL(string: buildURL(Latitude: lat, Longitude: lon)) else {
             onError("Error building URL")

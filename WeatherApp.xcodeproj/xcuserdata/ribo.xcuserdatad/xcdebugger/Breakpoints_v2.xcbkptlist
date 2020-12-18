@@ -14,10 +14,10 @@
             filePath = "WeatherApp/LoadSaveForcastService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "JSONToForecastArray(URL:)"
-            landmarkType = "9">
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "forecastArrayToJSON(Forecasts:Filename:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

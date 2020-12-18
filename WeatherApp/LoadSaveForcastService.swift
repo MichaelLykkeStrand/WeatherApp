@@ -33,12 +33,10 @@ class StorageService {
             guard let url = storageurl else {
                 return
             }
-            do{
-                let pathWithFileName = url.appendingPathComponent(filename)
-                do {
-                    try jsonString.write(to: pathWithFileName, atomically: true, encoding: .utf8)
-                    return
-                } catch { print(error) }
+            let pathWithFileName = url.appendingPathComponent(filename)
+            do {
+                try jsonString.write(to: pathWithFileName, atomically: true, encoding: .utf8)
+                return
             } catch { print(error) }
         } catch { print(error) }
         return
@@ -49,7 +47,6 @@ class StorageService {
             guard let pathWithFileName = self.storageurl?.appendingPathComponent(filename) else { return nil }
             let jsonData = try Data(contentsOf:pathWithFileName, options: [.alwaysMapped , .uncached ] )
             let decodedForecasts = try JSONDecoder().decode([LocationModel].self, from: jsonData)
-            //print(decodedForecasts)
             return (decodedForecasts)
         } catch { print(error) }
         return nil

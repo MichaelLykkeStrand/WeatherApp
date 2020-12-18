@@ -47,7 +47,6 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // create a new cell if needed or reuse an old one
         let cell:UITableViewCell = (self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
         
         cell.textLabel?.text = self.savedLocations?[indexPath.row].name
@@ -87,12 +86,6 @@ class WeatherLookupViewController: UIViewController, UISplitViewControllerDelega
     func autoComplete(){
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
-
-        // Specify the place data types to return.
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
-                                                    UInt(GMSPlaceField.placeID.rawValue))
-        autocompleteController.placeFields = fields
-
         // Specify a filter.
         let filter = GMSAutocompleteFilter()
         filter.type = .city
@@ -132,7 +125,6 @@ extension WeatherLookupViewController: GMSAutocompleteViewControllerDelegate {
           }
           if let searchedPlace = place {
             searchPlace = place
-            //print("The selected place's coordinates are: \(searchedPlace.coordinate)")
             let newLocation = LocationModel(name: searchedPlace.name, lat: searchedPlace.coordinate.latitude, lon: searchedPlace.coordinate.longitude)
             self.savedLocations?.append(newLocation)
             guard let l = self.savedLocations else { return }
